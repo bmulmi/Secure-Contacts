@@ -34,19 +34,22 @@ exports.addContact = function(contact, callback){
     })
 }
 
-exports.displayContacts = function(callback){
+exports.displayContacts = async function(query, callback){
     database.collection('contacts').find().toArray(function(err, result){
+        var dataset = [];
         if(err){
-            callback(null, err);
+            console.log(err);
+            callback(err, null);
+        } else if (result.length > 0){
+            console.log("returned result length: " + result.length);
+            for (each of result){
+                //console.log('pushing');
+                dataset.push(each);
+            }
+            callback(null, dataset);
+        } else {
+            console.log("Empty Database!");
+            callback(null, null);
         }
-        else if (result.length > 0){
-            var dataset = [];
-            console.log(result);
-            return result;
-
-            //for(each, index of result)
-             //   dataset[index] = each;
-             
-        }
-    })
+    });
 }

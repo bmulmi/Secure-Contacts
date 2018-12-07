@@ -14,12 +14,12 @@ html
                     th 
                     th 
             tbody 
-                each val of contacts 
+                each i in contacts 
                     tr
-                        td= val.name
-                        td= val.address 
-                        td= val.contactbyphone 
-                        td= val.contactbyemail 
+                        td= contacts[i].Prefix + ' ' + contacts[i].FirstName + ' ' + contacts[i].LastName
+                        td= contacts[i].Street + ' ' + contacts[i].City + ' ' + contacts[i].State + ' ' + contacts[i].Zip
+                        td= contacts[i].Phone 
+                        td= contacts[i].Email 
                         td
                             button delete
                         td 
