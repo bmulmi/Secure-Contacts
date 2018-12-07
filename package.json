@@ -1,0 +1,30 @@
+{
+  "name": "secure-contacts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bmulmi/Secure-Contacts.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bmulmi/Secure-Contacts/issues"
+  },
+  "homepage": "https://github.com/bmulmi/Secure-Contacts#readme",
+  "dependencies": {
+    "all": "0.0.0",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "mongodb": "^3.1.10",
+    "morgan": "^1.9.1",
+    "path": "^0.12.7",
+    "serve-favicon": "^2.5.0"
+  }
+}
