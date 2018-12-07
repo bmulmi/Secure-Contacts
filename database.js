@@ -33,3 +33,20 @@ exports.addContact = function(contact, callback){
         console.log('ID returned: '+ result.insertedId);
     })
 }
+
+exports.displayContacts = function(callback){
+    database.collection('contacts').find().toArray(function(err, result){
+        if(err){
+            callback(null, err);
+        }
+        else if (result.length > 0){
+            var dataset = [];
+            console.log(result);
+            return result;
+
+            //for(each, index of result)
+             //   dataset[index] = each;
+             
+        }
+    })
+}
