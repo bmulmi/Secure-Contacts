@@ -5,14 +5,14 @@ html
     body 
         p Contact Information Submitted Successfully.
         p 
-            |Name: #{post.name}
+            |Name: #{post.prefix} #{post.firstname} #{post.lastname}
             br
-            |Address: #{post.address}
+            |Address: #{post.street}, #{post.city}, #{post.state}, #{post.zip}
             br
-            |Contact by Phone: #{post.contactbyphone}
+            |Contact by Phone: #{post.contactbyphone ? 'yes' : 'no'}
             br
-            |Contact by Mail: #{post.contactbymail}
+            |Contact by Mail: #{post.contactbymail ? 'yes' : 'no'}
             br
-            |Contact by E-mail: #{post.contactbyemail}
+            |Contact by E-mail: #{post.contactbyemail ? post.email : 'no'}
             br 
         p Thank You!

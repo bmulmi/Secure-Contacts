@@ -14,3 +14,22 @@ exports.build = function(){
         database.createCollection('contacts');
     })
 }
+
+exports.addContact = function(contact, callback){
+    database.collection('contacts').insertOne({
+        FirstName: contact['firstname'],
+        LastName: contact['lastname'],
+        Prefix: contact['prefix'],
+        Street: contact['street'],
+        City: contact['city'],
+        State: contact['state'],
+        Zip: contact['zip'],
+        Phone: contact['phone'],
+        Email: contact['email'],
+        ContactbyMail: contact['contactbymail'],
+        ContactbyEmail: contact['contactbyemail'],
+        ContactbyPhone: contact['contactbyphone']
+    }, function(err, result){
+        console.log('ID returned: '+ result.insertedId);
+    })
+}
