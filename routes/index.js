@@ -2,11 +2,11 @@ var express = require('express');
 var router = express.Router();
 var database = require('../database');
 
-var mailer = function(req, res, next){
-    console.log("in Mailer!");
-    res.render('mailer', { });
-};
-
-router.get('/mailer', mailer);
+router.get('/contacts', function(req, res){
+    console.log('here'+req.body);
+    var contact = database.displayContacts();
+    console.log(contact);
+    res.end();
+})
 
 module.exports = router;

@@ -4,6 +4,8 @@ var database = require('../database');
 
 function start (req, res){
     console.log("in Mailer.");
+    var cont = database.displayContacts();
+    console.log(cont);
     res.render('mailer', { });
 };
 
@@ -53,5 +55,6 @@ function getmessage(msg){
 
     return body;
 }
+
 
 module.exports = router;

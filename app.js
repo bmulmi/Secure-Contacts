@@ -21,13 +21,14 @@ app.use(ex_session({secret: 'secure-contacts'}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
-//var index = require('./routes/index');
+var index = require('./routes/index');
 var mailer = require('./routes/mailer');
 var contacts = require('./routes/contacts');
 
 app.use('/', mailer);
 app.use('/mailer', mailer);
 app.use('/contacts', contacts);
+app.use('/index', index);
 //module.exports = app;
 
 app.listen(3000);
