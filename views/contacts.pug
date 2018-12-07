@@ -1,0 +1,27 @@
+doctype html
+html
+    head
+        title Contacts
+    
+    body
+        table 
+            thead 
+                tr 
+                    th Name
+                    th Address  
+                    th Phone 
+                    th E-Mail 
+                    th 
+                    th 
+            tbody 
+                each val of contacts 
+                    tr
+                        td= val.name
+                        td= val.address 
+                        td= val.contactbyphone 
+                        td= val.contactbyemail 
+                        td
+                            button delete
+                        td 
+                            button update 
+    

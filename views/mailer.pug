@@ -1,0 +1,63 @@
+doctype html
+html
+    head
+        title Mailer    
+        
+    body
+
+        form(method="post" action="mailer")
+            div#formtype
+                p
+                    input(type="radio" name="gender" value="Mr")
+                    | Mr.
+                    input(type="radio" name="gender" value="Mrs") 
+                    | Mrs.
+                    input(type="radio" name="gender" value="Ms") 
+                    | Ms.
+                    input(type="radio" name="gender" value="Dr") 
+                    | Dr.
+                
+                p
+                    label(for="firstname") First Name: 
+                    input(id="firstname" type="text" name="firstname" required autofocus) 
+                    label(for="lastname") Last Name:
+                    input(id="lastname" type="text" name="lastname" required)
+                
+                p
+                    label(for="street") Street:
+                    input(id="street" type="text" name="street" )
+                    label(for="city") City:
+                    input(id="city" type="text" name="city")                   
+                
+                p
+                    |State:
+                    select(name="state")
+                        option(selected="selected" value="") State
+                        option(selected="NJ") NJ
+                        option(selected="NY") NY
+                        option(selected="PA") PA
+                        option(selected="CT") CT
+                    label(for="ZIP") ZIP:
+                    input(id="ZIP" type="text" name="ZIP")
+                    
+                p
+                    label(for="phone") Phone:
+                    input(id="phone" type="text" name="phone")
+                
+                p
+                    label(for="email") E-Mail:
+                    input(id="email" type="text" name="email")
+                
+                p
+                    |How may we contact you?
+                    input(type="checkbox" name="phonechk" value="phone") 
+                    |Phone
+                    input(type="checkbox" name="mailchk" value="mail") 
+                    |Mail
+                    input(type="checkbox" name="emailchk" value="email") 
+                    |E-Mail
+                    input(type="checkbox" name="any" value="any" checked) 
+                    |Any
+            
+            button(type="submit") Submit
+        a(href="contacts") Contacts
