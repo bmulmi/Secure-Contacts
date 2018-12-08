@@ -1,27 +1,24 @@
-doctype html
-html
-    head
-        title Contacts
-    
-    body
-        table 
-            thead 
-                tr 
-                    th Name
-                    th Address  
-                    th Phone 
-                    th E-Mail 
-                    th 
-                    th 
-            tbody 
-                each i in contacts 
-                    tr
-                        td= contacts[i].Prefix + ' ' + contacts[i].FirstName + ' ' + contacts[i].LastName
-                        td= contacts[i].Street + ' ' + contacts[i].City + ' ' + contacts[i].State + ' ' + contacts[i].Zip
-                        td= contacts[i].Phone 
-                        td= contacts[i].Email 
-                        td
-                            button delete
-                        td 
-                            button update 
+extends layout
+
+block content
+    table.table.table-striped.table-responsive
+        thead.thead-light
+            tr 
+                th Name
+                th Address  
+                th Phone 
+                th E-Mail 
+                th 
+                th 
+        tbody 
+            each val,i in contacts 
+                tr
+                    td= val.Prefix + ' ' + val.FirstName + ' ' + val.LastName
+                    td= val.Street + ' ' + val.City + ' ' + val.State + ' ' + val.Zip
+                    td= val.Phone 
+                    td= val.Email 
+                    td
+                        button delete
+                    td 
+                        button update 
     

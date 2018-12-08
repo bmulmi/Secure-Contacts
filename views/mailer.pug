@@ -1,13 +1,10 @@
-doctype html
-html
-    head
-        title Mailer    
-        
-    body
+extends layout
 
-        form(method="post" action="mailer")
+block content
+
+        form.form-horizontal(method="post" action="mailer")
             div#formtype
-                p
+                .form-radio
                     input(type="radio" name="prefix" value="Mr")
                     | Mr.
                     input(type="radio" name="prefix" value="Mrs") 
@@ -17,20 +14,20 @@ html
                     input(type="radio" name="prefix" value="Dr") 
                     | Dr.
                 
-                p
+                .form-group
                     label(for="firstname") First Name: 
                     input(id="firstname" type="text" name="firstname" required autofocus) 
                     label(for="lastname") Last Name:
                     input(id="lastname" type="text" name="lastname" required)
                 
-                p
+                .form-group
                     label(for="street") Street:
                     input(id="street" type="text" name="street" )
                     label(for="city") City:
                     input(id="city" type="text" name="city")                   
                 
-                p
-                    |State:
+                .form-group
+                    label(for="state") State:
                     select(name="state")
                         option(selected="selected" value="") State
                         option(selected="NJ") NJ
@@ -40,16 +37,16 @@ html
                     label(for="zip") ZIP:
                     input(id="zip" type="text" name="zip")
                     
-                p
+                .form-group
                     label(for="phone") Phone:
                     input(id="phone" type="text" name="phone")
                 
-                p
+                .form-group
                     label(for="email") E-Mail:
                     input(id="email" type="text" name="email")
                 
-                p
-                    |How may we contact you?
+                .form-group
+                    |Contact by:
                     input(type="checkbox" name="phonechk" value="phone") 
                     |Phone
                     input(type="checkbox" name="mailchk" value="mail") 
@@ -59,4 +56,4 @@ html
                     input(type="checkbox" name="any" value="any" checked) 
                     |Any
             
-            button(type="submit") Submit
+            button.btn.btn-primary(type="submit") Submit

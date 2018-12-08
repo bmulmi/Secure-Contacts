@@ -15,7 +15,7 @@ exports.build = function(){
     })
 }
 
-exports.addContact = function(contact, callback){
+exports.addContact = function(contact){
     database.collection('contacts').insertOne({
         FirstName: contact['firstname'],
         LastName: contact['lastname'],

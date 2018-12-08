@@ -8,8 +8,8 @@ router.get('/', function (req, res){
         if (err) console.log(err)
         else if (result == null) console.log("empty database")
         else
-            for(each of result){
-                console.log(each.FirstName);
+            for(each in result){
+                console.log(result[each].FirstName);
             }
             console.log("displaying contacts: "+ result);
             res.render('contacts', {contacts: result});

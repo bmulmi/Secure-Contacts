@@ -1,0 +1,21 @@
+doctype html
+html
+    head
+        title Secure Contacts
+        script(src="http://code.jquery.com/jquery-1.11.0.min.js")
+        script(src="https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js")
+        link(href="https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css" rel="stylesheet")
+        link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+    
+    body   
+        .container
+            nav.navbar.navbar-expand-lg.navbar-light.bg-light
+                a(class="navbar-brand" href="/") Secure Contacts
+                ul.navbar-nav.mr-auto
+                    li.nav-item 
+                        a(href="/") Home
+                    li.nav-item 
+                        a(href="/mailer") Forms
+                    li.nav-item 
+                        a(href="/contacts") Contacts
+            block content
