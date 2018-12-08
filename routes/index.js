@@ -1,10 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var database = require('../database');
 
 function start (req, res){
     console.log("in index.");
-    res.end();
+    res.render('index',{ });
 };
 
 router.get('/', start);

@@ -1,6 +1,18 @@
 var express = require('express');
 var router = express.Router();
+var geo = require('mapbox-geocoding');
 var database = require('../database');
+
+//geo.setAccessToken('pk.eyJ1IjoiYm11bG1pIiwiYSI6ImNqb2c2bm84ZzAxdmMzcXFsdzhudGI2bGwifQ.kdTqkiMEtZqC96gvz9liVQ');
+
+var options = {
+    provider: 'google',
+    httpAdapter: 'https', 
+    apiKey: 'AIzaSyDijxAW68wrNV0Jc6JVHGdoPgrRLFeStwg', 
+    formatter: null
+  };
+ 
+var geocoder = NodeGeocoder(options);
 
 function start (req, res){
     console.log("in Mailer.");
@@ -11,8 +23,14 @@ router.get('/mailer', start);
 router.get('/', start);
 
 router.post('/mailer', function(req, res){
-    console.log(req.body);
+    //console.log(req.body);
     var post = getmessage(req.body);
+    var address = post.street + ', ' + post.city + ', ' + post.state + ', ' + post.zip;
+
+    geo.geocode('mapbox.places', address, function(err, data){
+        console.log(data.latlng);
+    })
+    
     res.render('submitted',{post:post});
     database.addContact(post);
 });

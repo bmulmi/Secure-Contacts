@@ -1,10 +1,8 @@
 extends layout
 
 block content
-    script(src="../public/javascript/contactspage.js")
-
     .container-fluid.h-60
-        .col-md-10.offset-1
+        #contacttable
             table.table.table-striped.table-responsive.mw-100.p-2
                 thead.thead-light
                     tr 
@@ -16,14 +14,20 @@ block content
                         th &nbsp
                 tbody 
                     each val,i in contacts 
-                        tr.tabledata 
-                            td= val.Prefix + '. ' + val.FirstName + ' ' + val.LastName
-                            td= val.Street + ' ' + val.City + ' ' + val.State + ' ' + val.Zip
-                            td= val.Phone 
-                            td= val.Email 
+                        - var name = val.Prefix + '. ' + val.FirstName + ' ' + val.LastName
+                        - var address = val.Street + ', ' + val.City + ', ' + val.State + ', ' + val.Zip
+                        - var phone = val.Phone
+                        - var email = val.email
+                        tr.tabledata(data-name = name, data-address = address, data-phone = phone, data-email = email)
+                            td= name
+                            td= address
+                            td= phone 
+                            td= email
                             td
-                                button#delete delete
+                                button#delete.btn.btn-danger delete
                             td 
-                                button#update update 
-    .container.h40
-        #mapid
+                                button#update.btn.btn-info update                          
+        #contactmap
+        |map should go here. 
+
+    script(src='javascript/contactspage.js')
