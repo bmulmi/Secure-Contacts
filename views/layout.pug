@@ -5,17 +5,23 @@ html
         script(src="http://code.jquery.com/jquery-1.11.0.min.js")
         script(src="https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.js")
         link(href="https://api.mapbox.com/mapbox.js/v3.1.1/mapbox.css" rel="stylesheet")
-        link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css", integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7", crossorigin="anonymous")
+        link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous")
     
     body   
         .container
-            nav.navbar.navbar-expand-lg.navbar-light.bg-light
-                a(class="navbar-brand" href="/") Secure Contacts
-                ul.navbar-nav.mr-auto
+            nav.navbar.sticky-top.navbar-expand-lg.navbar-light.bg-light.d-flex.justify-content-end
+                a.navbar-brand.col-4(href="/") Secure Contacts
+                
+                form.form-inline.my-lg-0.col-4
+                    input.form-control.mr-sm-2(type="search" placeholder="Search" aria-label="Search")
+                    button.btn.btn-outline-success.my-2.my-sm-0(type="submit") Search
+
+                ul.navbar-nav.mx-2.mr-auto.col-3
                     li.nav-item 
-                        a(href="/") Home
+                        a.nav-link(href="/") Home
                     li.nav-item 
-                        a(href="/mailer") Forms
+                        a.nav-link(href="/mailer") Forms
                     li.nav-item 
-                        a(href="/contacts") Contacts
+                        a.nav-link(href="/contacts") Contacts
+                
             block content

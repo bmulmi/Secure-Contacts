@@ -1,24 +1,28 @@
 extends layout
 
 block content
-    table.table.table-striped.table-responsive
-        thead.thead-light
-            tr 
-                th Name
-                th Address  
-                th Phone 
-                th E-Mail 
-                th 
-                th 
-        tbody 
-            each val,i in contacts 
-                tr
-                    td= val.Prefix + ' ' + val.FirstName + ' ' + val.LastName
-                    td= val.Street + ' ' + val.City + ' ' + val.State + ' ' + val.Zip
-                    td= val.Phone 
-                    td= val.Email 
-                    td
-                        button delete
-                    td 
-                        button update 
-    
+    script(src="../public/javascript/contactspage.js")
+    .container-fluid.h-60
+        .col-md-10.offset-1
+            table.table.table-striped.table-responsive.mw-100.p-2
+                thead.thead-light
+                    tr 
+                        th Name
+                        th Address  
+                        th Phone 
+                        th E-Mail 
+                        th &nbsp
+                        th &nbsp
+                tbody 
+                    each val,i in contacts 
+                        tr.tabledata 
+                            td= val.Prefix + '. ' + val.FirstName + ' ' + val.LastName
+                            td= val.Street + ' ' + val.City + ' ' + val.State + ' ' + val.Zip
+                            td= val.Phone 
+                            td= val.Email 
+                            td
+                                button#delete delete
+                            td 
+                                button#update update 
+    .container.h40
+        #mapid

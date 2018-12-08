@@ -1,18 +1,17 @@
-doctype html 
-html 
-    head 
-        title Contact Submitted 
-    body 
-        p Contact Information Submitted Successfully.
-        p 
-            |Name: #{post.prefix} #{post.firstname} #{post.lastname}
-            br
-            |Address: #{post.street}, #{post.city}, #{post.state}, #{post.zip}
-            br
-            |Contact by Phone: #{post.contactbyphone ? 'yes' : 'no'}
-            br
-            |Contact by Mail: #{post.contactbymail ? 'yes' : 'no'}
-            br
-            |Contact by E-mail: #{post.contactbyemail ? post.email : 'no'}
-            br 
-        p Thank You!
+extends layout
+
+block content
+    .containter
+        .jumbotron
+            h1.display-4 Thank you!
+            p.lead Contact Information Submitted Successfully.
+            .my-5 
+                p.m-4 Name: #{post.prefix} #{post.firstname} #{post.lastname}
+                
+                p.m-4 Address: #{post.street}, #{post.city}, #{post.state}, #{post.zip}
+                
+                p.m-4 Contact by Phone: #{post.contactbyphone ? 'yes' : 'no'}
+                
+                p.m-4 Contact by Mail: #{post.contactbymail ? 'yes' : 'no'}
+                
+                p.m-4 Contact by E-mail: #{post.contactbyemail ? post.email : 'no'} 
