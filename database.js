@@ -28,13 +28,15 @@ exports.addContact = function(contact){
         Email: contact['email'],
         ContactbyMail: contact['contactbymail'],
         ContactbyEmail: contact['contactbyemail'],
-        ContactbyPhone: contact['contactbyphone']
+        ContactbyPhone: contact['contactbyphone'],
+        Longitude: contact['longitude'],
+        Latitude: contact['latitude']
     }, function(err, result){
         console.log('ID returned: '+ result.insertedId);
     })
 }
 
-exports.displayContacts = async function(query, callback){
+exports.displayContacts = function(query, callback){
     database.collection('contacts').find().toArray(function(err, result){
         var dataset = [];
         if(err){

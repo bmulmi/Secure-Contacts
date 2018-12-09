@@ -9,7 +9,7 @@ router.get('/', function (req, res){
         else if (result == null) console.log("empty database")
         else
             for(each in result){
-                console.log(result[each].FirstName);
+                console.log(result[each].Latitude);
             }
             console.log("displaying contacts: "+ result);
             res.render('contacts', {contacts: result});

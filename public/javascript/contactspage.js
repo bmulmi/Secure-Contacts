@@ -4,9 +4,19 @@ $(document).ready(function(){
     console.log('IM IN CONTACTS PAGE!!')
     init_map();
 
-    $('.tabledata').click(function(){
-
+    $('.tabledata').each(function(){
+        console.log($(this).data());
+        plot($(this).data());
     })
+
+    $('.tabledata').click(function(){
+        var lat = $(this).data("latitude");
+        var lon = $(this).data("longitude");
+        console.log(lat + ", " + lon);
+        var lt = L.latLng(lat, lon);
+        mymap.flyTo(lt, 10);
+    });
+
 })
 
 function init_map(){
@@ -18,4 +28,11 @@ function init_map(){
         id: 'mapbox.streets',
         accessToken: 'pk.eyJ1IjoiYm11bG1pIiwiYSI6ImNqcGZ0bnF2cDAxc2MzcnBqeTc2YXhpNjcifQ.xy8SiaohlWlETvM0INXpKg'
     }).addTo(mymap);
+}
+
+function plot(data){
+    var lat = data.latitude;
+    var lon = data.longitude;
+    var dat = data.name + "\n" + data.address + "\n" + data.phone;
+    L.marker([lat, lon]).bindPopup(dat).addTo(mymap);
 }

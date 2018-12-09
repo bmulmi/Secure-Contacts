@@ -1,18 +1,20 @@
 var express = require('express');
 var router = express.Router();
-var geo = require('mapbox-geocoding');
+//var NodeGeocoder = require('node-geocoder');
+var MapboxClient = require('mapbox');
+var client = new MapboxClient('pk.eyJ1IjoiYm11bG1pIiwiYSI6ImNqcGhhMW13azB1aTIzcW9iZ200MjN6dGkifQ.9T6eRTfsY5qnBOPhnjyuWg');
 var database = require('../database');
 
 //geo.setAccessToken('pk.eyJ1IjoiYm11bG1pIiwiYSI6ImNqb2c2bm84ZzAxdmMzcXFsdzhudGI2bGwifQ.kdTqkiMEtZqC96gvz9liVQ');
 
-var options = {
-    provider: 'google',
-    httpAdapter: 'https', 
-    apiKey: 'AIzaSyDijxAW68wrNV0Jc6JVHGdoPgrRLFeStwg', 
-    formatter: null
-  };
+// var options = {
+//     provider: 'google',
+//     httpAdapter: 'https', 
+//     apiKey: 'AIzaSyDijxAW68wrNV0Jc6JVHGdoPgrRLFeStwg', 
+//     formatter: null
+//   };
  
-var geocoder = NodeGeocoder(options);
+//var geocoder = NodeGeocoder(options);
 
 function start (req, res){
     console.log("in Mailer.");
@@ -23,16 +25,21 @@ router.get('/mailer', start);
 router.get('/', start);
 
 router.post('/mailer', function(req, res){
-    //console.log(req.body);
     var post = getmessage(req.body);
-    var address = post.street + ', ' + post.city + ', ' + post.state + ', ' + post.zip;
-
-    geo.geocode('mapbox.places', address, function(err, data){
-        console.log(data.latlng);
-    })
+    var address = post.street + ', ' + post.city + ', ' + post.state;
+    //console.log("address passed: " + address);
     
+    client.geocodeForward(address, function(err, data, res){
+        //console.log("result returned: " + JSON.stringify(data.features[0].geometry.coordinates));
+        post.longitude = data.features[0].geometry.coordinates[0];
+        post.latitude = data.features[0].geometry.coordinates[1];
+        //console.log("longitude: " + post.longitude);
+        //console.log("latitude: " + post.latitude);
+        
+        database.addContact(post);
+    });
+
     res.render('submitted',{post:post});
-    database.addContact(post);
 });
 
 function getmessage(msg){

@@ -2,3 +2,11 @@
     height: 300px;
     border: solid black 2px;
 }
+#contacttable{
+    height: 20em;
+    overflow: auto;
+}
+
+td{
+    cursor: pointer;
+}
