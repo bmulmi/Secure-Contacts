@@ -1,0 +1,56 @@
+.container
+    form.form-horizontal.col-md-12.offset-2.mt-4()
+        div#formtype
+            .form-radio
+                input.ml-2.mr-1(type="radio" name="prefix" value="Mr" checked)
+                |Mr.
+                input.ml-3.mr-1(type="radio" name="prefix" value="Mrs") 
+                |Mrs.
+                input.ml-3.mr-1(type="radio" name="prefix" value="Ms") 
+                |Ms.
+                input.ml-3.mr-1(type="radio" name="prefix" value="Dr") 
+                |Dr.
+            
+            .form-group.my-2
+                label.mx-2(for="firstname") First Name: 
+                input(id="firstname" type="text" name="firstname" value = contacts.FirstName required autofocus) 
+                label.mx-2(for="lastname") Last Name:
+                input(id="lastname" type="text" name="lastname" value = contacts.LastName required)
+            
+            .form-group.my-2
+                label.mx-2(for="street") Street:
+                input(id="street" type="text" name="street" value = contacts.Street required)
+                label.mx-2(for="city") City:
+                input(id="city" type="text" name="city" value = contacts.City required)                   
+            
+            .form-group.my-2
+                label.mx-2(for="state") State:
+                select.selState(name="state")
+                    option(selected="selected" value="") --
+                    option(value="NJ") NJ
+                    option(value="NY") NY
+                    option(value="PA") PA
+                    option(value="CT") CT
+                label.mx-2(for="zip") ZIP:
+                input(id="zip" type="text" name="zip" value = contacts.Zip required)
+                
+            .form-group.my-2
+                label.mx-2(for="phone") Phone:
+                input(id="phone" type="text" name="phone" value = contacts.Phone)
+            
+            .form-group.my-2
+                label.mx-2(for="email") E-Mail:
+                input(id="email" type="text" name="email" value = contacts.Email)
+            
+            .form-group.my-2.ml-2
+                |Contact by:
+                input.ml-3.mr-1(type="checkbox" name="phonechk" value="phone") 
+                |Phone
+                input.ml-3.mr-1(type="checkbox" name="mailchk" value="mail") 
+                |Mail
+                input.ml-3.mr-1(type="checkbox" name="emailchk" value="email") 
+                |E-Mail
+                input.ml-3.mr-1(type="checkbox" name="any" value="any") 
+                |Any
+        
+        button.btn.btn-primary.m-2(type="submit") Submit

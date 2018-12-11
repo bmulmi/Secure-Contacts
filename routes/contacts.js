@@ -11,7 +11,7 @@ router.get('/', function (req, res){
             for(each in result){
                 console.log(result[each].Latitude);
             }
-            console.log("displaying contacts: "+ result);
+            console.log("displaying contacts: "+ result[0]._id);
             res.render('contacts', {contacts: result});
     });
 });

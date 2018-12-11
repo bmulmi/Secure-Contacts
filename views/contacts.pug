@@ -2,31 +2,42 @@ extends layout
 
 block content
     .container-fluid.h-60
-        table.table.table-striped.table-responsive.mw-100.p-2#contacttable
-            thead.thead-light
-                tr 
-                    th Name
-                    th Address  
-                    th Phone 
-                    th E-Mail 
-                    th &nbsp
-                    th &nbsp
-            tbody 
-                each val,i in contacts 
-                    - var name = val.Prefix + '. ' + val.FirstName + ' ' + val.LastName
-                    - var address = val.Street + ', ' + val.City + ', ' + val.State + ', ' + val.Zip
-                    - var phone = val.Phone
-                    - var email = val.Email
-                    tr.tabledata(data-name = name, data-address = address, data-phone = phone, data-email = email, data-latitude = val.Latitude, data-longitude = val.Longitude)
-                        td= name
-                        td= address
-                        td= phone 
-                        td= email
-                        td
-                            button#delete.btn.btn-danger delete
-                        td 
-                            button#update.btn.btn-info update                          
-        #contactmap
-        |map should go here. 
+        section#read_page
+            table.table.table-striped.table-responsive.mw-100.p-2#contacttable
+                thead.thead-light
+                    tr 
+                        th Name
+                        th Address  
+                        th Phone 
+                        th E-Mail 
+                        th &nbsp
+                        th &nbsp
+                tbody 
+                    each val,i in contacts 
+                        - var name = val.Prefix + '. ' + val.FirstName + ' ' + val.LastName
+                        - var address = val.Street + ', ' + val.City + ', ' + val.State + ', ' + val.Zip
+                        - var phone = val.Phone
+                        - var email = val.Email
+                        tr.tabledata(data-details=val)
+                            //-name = name, data-address = address, data-phone = phone, data-email = email, data-latitude = val.Latitude, data-longitude = val.Longitude, data-id = val._id
+                            td= name
+                            td= address
+                            td= phone 
+                            td= email
+                            td
+                                button#delete.btn.btn-danger delete
+                            td 
+                                button#update.btn.btn-info update                          
+            #contactmap
+        //- map should go here. 
+
+        section#update_page
+           include update.pug
+
+        section#delete_page
+            include delete.pug
+
+        section#create_page
+            include create.pug
 
     script(src='javascript/contactspage.js')

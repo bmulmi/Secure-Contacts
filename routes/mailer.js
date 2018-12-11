@@ -1,20 +1,8 @@
 var express = require('express');
 var router = express.Router();
-//var NodeGeocoder = require('node-geocoder');
 var MapboxClient = require('mapbox');
 var client = new MapboxClient('pk.eyJ1IjoiYm11bG1pIiwiYSI6ImNqcGhhMW13azB1aTIzcW9iZ200MjN6dGkifQ.9T6eRTfsY5qnBOPhnjyuWg');
 var database = require('../database');
-
-//geo.setAccessToken('pk.eyJ1IjoiYm11bG1pIiwiYSI6ImNqb2c2bm84ZzAxdmMzcXFsdzhudGI2bGwifQ.kdTqkiMEtZqC96gvz9liVQ');
-
-// var options = {
-//     provider: 'google',
-//     httpAdapter: 'https', 
-//     apiKey: 'AIzaSyDijxAW68wrNV0Jc6JVHGdoPgrRLFeStwg', 
-//     formatter: null
-//   };
- 
-//var geocoder = NodeGeocoder(options);
 
 function start (req, res){
     console.log("in Mailer.");
