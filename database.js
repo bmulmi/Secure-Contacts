@@ -55,3 +55,37 @@ exports.displayContacts = function(query, callback){
         }
     });
 }
+
+exports.updateContact = function (contact, callback){
+    console.log(contact);
+
+    database.collection('contacts').updateOne({"_id" : ObjectID(contact.id)}, {
+        $set : {
+            FirstName: contact['firstname'],
+            LastName: contact['lastname'],
+            Prefix: contact['prefix'],
+            Street: contact['street'],
+            City: contact['city'],
+            State: contact['state'],
+            Zip: contact['zip'],
+            Phone: contact['phone'],
+            Email: contact['email'],
+            ContactbyMail: contact['contactbymail'],
+            ContactbyEmail: contact['contactbyemail'],
+            ContactbyPhone: contact['contactbyphone'],
+            Longitude: contact['longitude'],
+            Latitude: contact['latitude']
+        }
+    }, function(err, result){
+        callback(err, result);
+    });
+}
+
+exports.deleteContact = function(contact, callback){
+    database.collection('contacts').deleteOne({"_id": ObjectID(contact)}, 
+        function (err, result) {
+            //console.log("in d b" + result);
+            callback(err,result);
+        }
+    )
+};

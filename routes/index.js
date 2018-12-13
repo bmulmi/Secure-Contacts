@@ -6,6 +6,6 @@ function start (req, res){
     res.render('index',{ });
 };
 
-router.get('/index', start);
+router.get('/', start);
 
 module.exports = router;

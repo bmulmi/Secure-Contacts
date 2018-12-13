@@ -9,7 +9,6 @@ function start (req, res){
     res.render('mailer', { });
 };
 
-router.get('/mailer', start);
 router.get('/', start);
 
 router.post('/mailer', function(req, res){

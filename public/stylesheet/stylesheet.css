@@ -10,3 +10,13 @@
 td{
     cursor: pointer;
 }
+
+#updateform, #createform, #formtype{
+    border: solid 2px darkgray;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+#create{
+    cursor: pointer;
+}
