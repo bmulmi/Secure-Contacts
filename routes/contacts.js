@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var MapboxClient = require('mapbox');
-var client = new MapboxClient('pk.eyJ1IjoiYm11bG1pIiwiYSI6ImNqcGhhMW13azB1aTIzcW9iZ200MjN6dGkifQ.9T6eRTfsY5qnBOPhnjyuWg');
+var client = new MapboxClient('API KEY GOES HERE');
 var database = require('../database');
 
 var ensureLoggedIn = function(req, res, next) {
