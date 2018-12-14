@@ -4,6 +4,17 @@ var MapboxClient = require('mapbox');
 var client = new MapboxClient('pk.eyJ1IjoiYm11bG1pIiwiYSI6ImNqcGhhMW13azB1aTIzcW9iZ200MjN6dGkifQ.9T6eRTfsY5qnBOPhnjyuWg');
 var database = require('../database');
 
+var ensureLoggedIn = function (req, res, next){
+    if (req.user){
+        console.log("logged in");
+        next();
+    } 
+    else {
+        console.log("login failed!!!!");
+        res.redirect('/login');
+    }
+}
+
 router.get('/', function (req, res){
     //console.log("in contacts.");
     database.displayContacts(null, function(err, result){
@@ -111,5 +122,9 @@ function getUpdateData(data){
 
     return details;
 }
+
+router.get('/logout', function (req, res){
+    res.redirect('/logout');
+})
 
 module.exports = router;

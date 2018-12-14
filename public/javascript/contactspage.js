@@ -1,97 +1,111 @@
 var mymap;
+var mypopups = [];
 
-$(document).ready(function(){
-    //console.log('IM IN CONTACTS PAGE!!')
-    init_map();
-    var task = [];
+init_map();
 
-    showRead();
+showRead();
+addremovebuttons();
 
-    $('#main-nav').append( "<li class = 'nav-item'> <a class = 'nav-link' id = 'create'> Create </li> ")
+function addremovebuttons(){
+    $("#main-contact-btn").remove();
+
+    // var createbtn = $('<li>');
+    // var createlink = $('<a>');
+    // createbtn.addClass('nav-item');
+    // createlink.addClass('nav-link');
+    // createlink.attr('id', 'create')
+    // createbtn.append(createlink);
+    // $('#main-nav').append(createbtn);
+
+    // var readbtn = $('<li>');
+    // var readlink = $('<a>').attr('id', 'nav-link');
+    // readbtn.addClass('nav-item');
+    // readlink.addClass('nav-link');
+    // readbtn.append(readlink);
+    // $('#main-nav').append(readbtn);
     
-    //plot the map
-    //$('<tr>').each(function(){
-         //console.log("PLOTTING");
+    $('#main-nav').append( '<li class = "nav-item"/> <a class = "nav-link" id = "read"> Contacts ');
+    
+    $('#main-nav').append( "<li class = 'nav-item'/> <a class = 'nav-link' id = 'create'> Create")
+}
 
-         //console.log($(this).data('details'));
-         //plot($(this).data('details'));
-    //});
 
-    //on click listener for each table row
-    // $('.tabledata').click(function(){
-    //     var lat = $(this).data('details').Latitude;
-    //     var lon = $(this).data('details').Longitude;
-    //     console.log(lat + ", " + lon);
-    //     var lt = L.latLng(lat, lon);
-    //     mymap.flyTo(lt, 10);
-    // });
+//update button handler 
+$('tbody').on('click','#update' ,function(){
+    var data = $(this).parent();
+    data = data.parent();
+    data = data.data('details');
+    //console.log(data.Prefix);
+    //console.log('data '+ JSON.stringify(data));
+    
+    setUpdateFields(data);
+    
+    showUpdate();
+});
 
-    //update button handler 
-    $('tbody').on('click','#update' ,function(){
-        var data = $(this).parent();
-        data = data.parent();
-        data = data.data('details');
-        //console.log(data.Prefix);
-        //console.log('data '+ JSON.stringify(data));
-        
-        setUpdateFields(data);
-        
-        showUpdate();
+//update form submit button handler
+$('#update_page button').click(function(){
+    //post the form
+    //var formdata = new FormData(JSON.stringify(myform[0]));
+    //console.log(JSON.stringify(formdata));
+    //var myform = document.getElementById('update-form');
+    //console.log("OUTPUTTINGGGGG \n" + JSON.stringify(myform));
+    var myform = $('#update-form').serializeArray();
+    var formdata = getFormData(myform);
+    
+    var jax = $.post('contacts/update', { formdata : formdata });
+    jax.done(function(data){
+        console.log("done updating in database.");
+        showRead();
     });
+});
 
-    //update form submit button handler
-    $('#update_page button').click(function(){
-        //post the form
-        //var formdata = new FormData(JSON.stringify(myform[0]));
-        //console.log(JSON.stringify(formdata));
-        //var myform = document.getElementById('update-form');
-        //console.log("OUTPUTTINGGGGG \n" + JSON.stringify(myform));
-        var myform = $('#update-form').serializeArray();
-        var formdata = getFormData(myform);
-                
-        var jax = $.post('contacts/update', { formdata : formdata });
-        jax.done(function(data){
-            console.log("done updating in database.");
-            unplot(formdata);
-            showRead();
-        });
-    });
-
-    //handler for delete button on each row
-    $('tbody').on('click', '#delete', function(){
-        var data = $(this).parent();
-        data = data.parent();
-        data = data.data('details');
-        //console.log(data);
-        var id = data._id;
-        //console.log("my id is: ");
-        //console.log(id);
-        var j = $.post('contacts/delete', {id : id});
-        j.done(function(){
-            console.log("done deleting!");
-            unplot(data);
-            showRead();
-        })
-        //showDelete();
-    });
-
-    //handler for create button on the nav bar
-    $('#main-nav').on('click', '#create', function(){
-        showCreate();
-    });
-
-    $('#create_page button').click(function(){
-        var myform = $('#create-form').serializeArray();
-        var formdata = getFormData(myform);
-
-        var ja = $.post('contacts/create', { formdata : formdata });
-        ja.done(function(data){
-            console.log("done creating in database.");
-            showRead();
-        });
-        //console.log("herererererere");
+//handler for delete button on each row
+$('tbody').on('click', '#delete', function(){
+    var data = $(this).parent();
+    data = data.parent();
+    data = data.data('details');
+    //console.log(data);
+    var id = data._id;
+    //console.log("my id is: ");
+    //console.log(id);
+    var j = $.post('contacts/delete', {id : id});
+    j.done(function(){
+        console.log("done deleting!");
+        //unplot(data);
+        showRead();
     })
+    //showDelete();
+});
+
+//handler for create button on the nav bar
+$('#main-nav').on('click', '#create', function(){
+    showCreate();
+});
+
+//handler for contacts button on the nav bar
+$('#main-nav').on('click', "#read", function(){
+    showRead();
 })
+
+//create page submit button handler
+$('#create_page button').click(function(){
+    var myform = $('#create-form').serializeArray();
+    var formdata = getFormData(myform);
+
+    //reset the form data
+    $("#create-form").each(function(){
+        this.reset();
+    });
+
+    var ja = $.post('contacts/create', { formdata : formdata });
+    ja.done(function(data){
+        console.log("done creating in database.");
+        showRead();
+    });
+    //console.log("herererererere");
+})
+
 
 function init_map(){
     mymap = L.map('contactmap').setView([0, 0], 2);
@@ -107,17 +121,12 @@ function init_map(){
 function plot(data){
     var lat = data.Latitude;
     var lon = data.Longitude;
-    console.log("Plotting from:");
-    console.log(data);
-    var dat = data.name;
-    L.marker([lat, lon]).bindPopup(dat).addTo(mymap);
-}
-
-function unplot(data){
-    var lat = data.Latitude;
-    var lon = data.Longitude;console.log("UnPlotting from:");
-    console.log(data);
-    L.marker([lat, lon]).unbindPopup().addTo(mymap);
+    //console.log("Plotting from:");
+    //console.log(data);
+    var dat = data.FirstName + " " + data.LastName;
+    var popup = L.marker([lat, lon]);
+    popup.bindPopup(dat).addTo(mymap);
+    mypopups.push(popup);
 }
 
 //to get update-form data as a javascript object
@@ -173,9 +182,11 @@ function showRead(){
     var jax = $.post('contacts/read', { });
     jax.done(function(data){
         //console.log(data);
+        //remove the earlier table rows
         $('#contactbody tr').remove();
         //$('#contacttable').append('<tbody id = "contactbody">');
-
+        
+        //add the most recent data to the table rows
         for (i in data){
             var row = $('<tr>').addClass('tabledata');
 
@@ -208,6 +219,18 @@ function showRead(){
 
         //show the read section
         mask(false, true, false, false);
+        
+        //unplot the earlier markers
+        for (i in mypopups){
+            console.log("removing");
+            console.log(mypopups[i]);
+            mypopups[i].unbindPopup();
+            mymap.removeLayer(mypopups[i]);
+        }
+
+        //reset mypopus
+        mypopups = [];
+        console.log("popups reset successful!!");
 
         //plot the updated map
         $('.tabledata').each(function(){
@@ -220,7 +243,7 @@ function showRead(){
             var lon = $(this).data('details').Longitude;
             console.log(lat + ", " + lon);
             var lt = L.latLng(lat, lon);
-            mymap.flyTo(lt, 10);
+            mymap.flyTo(lt, 12);
         });
     });
 }

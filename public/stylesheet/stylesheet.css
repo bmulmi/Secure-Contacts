@@ -1,5 +1,5 @@
 #contactmap{
-    height: 30em;
+    height: 25em;
     border: solid black 2px;
 }
 #contacttable{
@@ -11,12 +11,16 @@ td{
     cursor: pointer;
 }
 
-#updateform, #createform, #formtype{
+#update-form, #create-form, #formtype{
     border: solid 2px darkgray;
     padding: 1em;
     border-radius: 1em;
 }
 
-#create{
+#create, #read{
     cursor: pointer;
+}
+
+#main-nav{
+    text-align: center;
 }
