@@ -4,18 +4,17 @@ var MapboxClient = require('mapbox');
 var client = new MapboxClient('pk.eyJ1IjoiYm11bG1pIiwiYSI6ImNqcGhhMW13azB1aTIzcW9iZ200MjN6dGkifQ.9T6eRTfsY5qnBOPhnjyuWg');
 var database = require('../database');
 
-var ensureLoggedIn = function (req, res, next){
-    if (req.user){
-        console.log("logged in");
-        next();
-    } 
-    else {
-        console.log("login failed!!!!");
+var ensureLoggedIn = function(req, res, next) {
+    if (req.user) {
+        return next();
+    } else {
+        console.log("Not logged in!");
+        console.log(req['user']);
         res.redirect('/login');
     }
 }
 
-router.get('/', function (req, res){
+router.get('/', ensureLoggedIn, function (req, res){
     //console.log("in contacts.");
     database.displayContacts(null, function(err, result){
         if (err) console.log(err)
@@ -29,7 +28,7 @@ router.get('/', function (req, res){
     });
 });
 
-router.post('/read', function(req, res){
+router.post('/read', ensureLoggedIn, function(req, res){
     database.displayContacts(null, function(err, result){
         if (err) console.log(err)
         else if (result == null) console.log("empty database")
@@ -43,22 +42,27 @@ router.post('/read', function(req, res){
     });
 });
 
-router.post('/create', function(req,res){
+router.post('/create', ensureLoggedIn, function(req,res){
     var post = getUpdateData(req.body);
     //console.log("CREATING   ")
     //console.log(post);
     var address = post.street + ', ' + post.city + ', ' + post.state;
 
     client.geocodeForward(address, function(err, data, resp){
-        post.longitude = data.features[0].geometry.coordinates[0];
-        post.latitude = data.features[0].geometry.coordinates[1];
-        //console.log(post.contactbyemail)
-        database.addContact(post);
-        res.end(JSON.stringify({result: 'success'}));
+        if(data.features) console.log("ADDRESS NOT FOUND");
+        else{
+            //console.log("data returned");
+            //console.log(data);
+            post.longitude = data.features[0].geometry.coordinates[0];
+            post.latitude = data.features[0].geometry.coordinates[1];
+            //console.log(post.contactbyemail)
+            database.addContact(post);
+            res.end(JSON.stringify({result: 'success'}));
+        }
     });
 })
 
-router.post('/delete', function (req, res){
+router.post('/delete', ensureLoggedIn, function (req, res){
     console.log(req.body.id);
     database.deleteContact( req.body.id , function (err, result){
         if (err) console.log(err);
@@ -66,7 +70,7 @@ router.post('/delete', function (req, res){
     })
 })
 
-router.post('/update', function(req,res){
+router.post('/update', ensureLoggedIn, function(req,res){
     //var da = req.body;
     //console.log(da);
     //console.log(da['formdata[id]']);
@@ -125,6 +129,6 @@ function getUpdateData(data){
 
 router.get('/logout', function (req, res){
     res.redirect('/logout');
-})
+});
 
 module.exports = router;

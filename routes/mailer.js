@@ -4,12 +4,10 @@ var MapboxClient = require('mapbox');
 var client = new MapboxClient('pk.eyJ1IjoiYm11bG1pIiwiYSI6ImNqcGhhMW13azB1aTIzcW9iZ200MjN6dGkifQ.9T6eRTfsY5qnBOPhnjyuWg');
 var database = require('../database');
 
-function start (req, res){
-    console.log("in Mailer.");
+router.get('/', function (req, res){
+    //console.log("in Mailer.");
     res.render('mailer', { });
-};
-
-router.get('/', start);
+});
 
 router.post('/mailer', function(req, res){
     var post = getmessage(req.body);
@@ -17,18 +15,22 @@ router.post('/mailer', function(req, res){
     //console.log("address passed: " + address);
     
     client.geocodeForward(address, function(err, data, res){
-        //console.log("result returned: " + JSON.stringify(data.features[0].geometry.coordinates));
-        post.longitude = data.features[0].geometry.coordinates[0];
-        post.latitude = data.features[0].geometry.coordinates[1];
-        //console.log("longitude: " + post.longitude);
-        //console.log("latitude: " + post.latitude);
-        
-        database.addContact(post);
-    });
+        if(data.features) console.log("ADDRESS NOT FOUND!");
+        else{
+            //console.log("result returned: " + JSON.stringify(data.features[0].geometry.coordinates));
+            post.longitude = data.features[0].geometry.coordinates[0];
+            post.latitude = data.features[0].geometry.coordinates[1];
+            //console.log("longitude: " + post.longitude);
+            //console.log("latitude: " + post.latitude);
+            
+            database.addContact(post);
 
-    res.render('submitted',{post:post});
+            res.render('submitted',{post:post});
+        }
+    });
 });
 
+/*---------------------serializes the data------------------------- */
 function getmessage(msg){
     var body = {
         firstname: msg['firstname'],

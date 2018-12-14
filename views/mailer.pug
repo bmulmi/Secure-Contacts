@@ -2,7 +2,7 @@ extends layout
 
 block content
     .container
-        form.form-horizontal.col-md-8.offset-2.mt-4(method="post" action="mailer")
+        form.form-horizontal.col-md-8.col-sm-6.col-xs-4.offset-2.mt-4(method="post" action="mailer")
             div#formtype
                 .form-radio
                     input.ml-2.mr-1(type="radio" name="prefix" value="Mr")
@@ -16,34 +16,36 @@ block content
                 
                 .form-group.my-2
                     label.mx-2(for="firstname") First Name: 
-                    input(id="firstname" type="text" name="firstname" required autofocus) 
+                    input.form-control(id="firstname" type="text" name="firstname" required autofocus) 
                     label.mx-2(for="lastname") Last Name:
-                    input(id="lastname" type="text" name="lastname" required)
+                    input.form-control(id="lastname" type="text" name="lastname" required)
                 
                 .form-group.my-2
                     label.mx-2(for="street") Street:
-                    input(id="street" type="text" name="street" required)
+                    input.form-control(id="street" type="text" name="street" required)
                     label.mx-2(for="city") City:
-                    input(id="city" type="text" name="city" required)                   
+                    input.form-control(id="city" type="text" name="city" required)                   
                 
                 .form-group.my-2
                     label.mx-2(for="state") State:
-                    select(name="state")
+                    select.form-control(name="state")
                         option(selected="selected" value="") --
-                        option(selected="NJ") NJ
-                        option(selected="NY") NY
-                        option(selected="PA") PA
-                        option(selected="CT") CT
+                        option(value="NJ") NJ
+                        option(value="NY") NY
+                        option(value="PA") PA
+                        option(value="CT") CT
+
+                .form-group.my-2        
                     label.mx-2(for="zip") ZIP:
-                    input(id="zip" type="text" name="zip" required)
+                    input.form-control(id="zip" type="text" name="zip" required)
                     
                 .form-group.my-2
                     label.mx-2(for="phone") Phone:
-                    input(id="phone" type="text" name="phone")
+                    input.form-control(id="phone" type="text" name="phone")
                 
                 .form-group.my-2
                     label.mx-2(for="email") E-Mail:
-                    input(id="email" type="text" name="email")
+                    input.form-control(id="email" type="text" name="email")
                 
                 .form-group.my-2.ml-2
                     |Contact by:
