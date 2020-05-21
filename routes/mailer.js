@@ -1,72 +1,64 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-var MapboxClient = require('mapbox');
-var client = new MapboxClient('pk.eyJ1IjoiYm11bG1pIiwiYSI6ImNqcGhhMW13azB1aTIzcW9iZ200MjN6dGkifQ.9T6eRTfsY5qnBOPhnjyuWg');
-var database = require('../database');
+var MapboxClient = require("mapbox");
+var client = new MapboxClient(
+  "pk.eyJ1IjoiYm11bG1pIiwiYSI6ImNqcGhhMW13azB1aTIzcW9iZ200MjN6dGkifQ.9T6eRTfsY5qnBOPhnjyuWg"
+);
+var database = require("../database");
 
-router.get('/', function (req, res){
-    //console.log("in Mailer.");
-    res.render('mailer', { });
+router.get("/", function (req, res) {
+  res.render("mailer", {});
 });
 
-router.post('/mailer', function(req, res){
-    var post = getmessage(req.body);
-    var address = post.street + ', ' + post.city + ', ' + post.state;
-    //console.log("address passed: " + address);
-    
-    client.geocodeForward(address, function(err, data, res){
-        if(data.features) console.log("ADDRESS NOT FOUND!");
-        else{
-            //console.log("result returned: " + JSON.stringify(data.features[0].geometry.coordinates));
-            post.longitude = data.features[0].geometry.coordinates[0];
-            post.latitude = data.features[0].geometry.coordinates[1];
-            //console.log("longitude: " + post.longitude);
-            //console.log("latitude: " + post.latitude);
-            
-            database.addContact(post);
+router.post("/mailer", function (req, res) {
+  var post = getmessage(req.body);
+  var address = post.street + ", " + post.city + ", " + post.state;
 
-            res.render('submitted',{post:post});
-        }
-    });
+  client.geocodeForward(address, function (err, data, result) {
+    if (data.features == undefined || data.features.length == 0)
+      console.log("ADDRESS NOT FOUND!");
+    else {
+      post.longitude = data.features[0].geometry.coordinates[0];
+      post.latitude = data.features[0].geometry.coordinates[1];
+      database.addContact(post);
+      res.render("submitted", { post: post });
+    }
+  });
 });
 
 /*---------------------serializes the data------------------------- */
-function getmessage(msg){
-    var body = {
-        firstname: msg['firstname'],
-        lastname: msg['lastname'],
-        prefix: msg['prefix'],
-        street: msg['street'],
-        city: msg['city'],
-        state: msg['state'],
-        zip: msg['zip'],
-        phone: msg['phone'],
-        email: msg['email'],
-    };
-    
-    if (msg['phonechk'] == "phone" || msg['any'] == 'any'){
-        body['contactbyphone'] = true;
-    }
-    else{
-        body['contactbyphone'] = false;
-    }
+function getmessage(msg) {
+  var body = {
+    firstname: msg["firstname"],
+    lastname: msg["lastname"],
+    prefix: msg["prefix"],
+    street: msg["street"],
+    city: msg["city"],
+    state: msg["state"],
+    zip: msg["zip"],
+    phone: msg["phone"],
+    email: msg["email"],
+  };
 
-    if (msg['mailchk'] == "mail" || msg['any'] == 'any'){
-        body['contactbymail'] = true;
-    }
-    else{
-        body['contactbymail'] = false;
-    }
+  if (msg["phonechk"] == "phone" || msg["any"] == "any") {
+    body["contactbyphone"] = true;
+  } else {
+    body["contactbyphone"] = false;
+  }
 
-    if (msg['emailchk'] == "email" || msg['any'] == 'any'){
-        body['contactbyemail'] = true;
-    }
-    else{
-        body['contactbyemail'] = false;
-    }
+  if (msg["mailchk"] == "mail" || msg["any"] == "any") {
+    body["contactbymail"] = true;
+  } else {
+    body["contactbymail"] = false;
+  }
 
-    return body;
+  if (msg["emailchk"] == "email" || msg["any"] == "any") {
+    body["contactbyemail"] = true;
+  } else {
+    body["contactbyemail"] = false;
+  }
+
+  return body;
 }
-
 
 module.exports = router;

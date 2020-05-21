@@ -3,8 +3,13 @@
     border: solid black 2px;
 }
 #contacttable{
-    height: 20em;
+    height: 22em;
+    width: 100%;
     overflow: auto;
+}
+
+#headingS{
+    letter-spacing: 2.4px;
 }
 
 td{
